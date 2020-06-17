@@ -9,16 +9,16 @@ DEFINES = \
 	-Dmqtt_EXPORTS \
 
 INCLUDES = \
-	-I. \
-	-I/usr/include \
-	-I/usr/include/x86_64-linux-gnu \
-	-I$(MQTT)/libraries/standard/mqtt/include \
-	-I$(MQTT)/libraries/standard/utilities/include \
-	-I$(MQTT)/libraries/standard/mqtt/src \
-	-I$(MQTT)/demos/logging-stack \
-	-I$(MQTT)/demos/mqtt/mqtt_demo_basic_tls \
-	-I$(MQTT)/demos/mqtt/mqtt_demo_lightweight \
-	-I$(MQTT)/demos/mqtt/mqtt_demo_plaintext \
+        -I. \
+        -I/usr/include \
+        -I/usr/include/x86_64-linux-gnu \
+        -I$(MQTT)/libraries/standard/mqtt/include \
+        -I$(MQTT)/libraries/standard/utilities/include \
+        -I$(MQTT)/libraries/standard/mqtt/src \
+        -I$(MQTT)/demos/logging-stack \
+        -I$(MQTT)/demos/mqtt/mqtt_demo_basic_tls \
+        -I$(MQTT)/demos/mqtt/mqtt_demo_lightweight \
+        -I$(MQTT)/demos/mqtt/mqtt_demo_plaintext \
 
 CFLAGS = \
 	-fPIC \
@@ -37,4 +37,19 @@ init-simple.c: init-cpp.c
 	grep -v '^#' $< | clang-format  > $@
 
 simple: 
-	frama-c -wp $(FRAMAC) init-simple.c -then -report
+	frama-c -wp -rte $(FRAMAC) init-simple.c -then -report
+
+all: 
+	frama-c -wp -rte $(FRAMAC) mqtt.h -then -report
+
+mqtt_init:
+	frama-c -wp -rte $(FRAMAC) MQTT_Init.c -then -report
+
+mqtt_GetPacketId:
+	frama-c -wp -rte $(FRAMAC) MQTT_GetPacketId.c -then -report
+
+fc: 
+	frama-c -wp -rte $(FRAMAC) mqtt_fc.h -then -report
+
+callgraph:
+	frama-c -users -main MQTT_Connect $(FRAMAC) ~/mqtt/libraries/standard/mqtt/src/mqtt.c
