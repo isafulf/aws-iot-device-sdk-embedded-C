@@ -1,7 +1,7 @@
 #ifndef MQTT_INTERNAL_H_
 #define MQTT_INTERNAL_H_
 
-#include "mqtt_config.h"
+//#include "mqtt_config.h"
 
 #ifndef LogError
     #define LogError( message )
