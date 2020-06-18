@@ -42,11 +42,14 @@ simple:
 all: 
 	frama-c -wp -rte $(FRAMAC) mqtt.h -then -report
 
-mqtt_init:
+mqtt_Init:
 	frama-c -wp -rte $(FRAMAC) MQTT_Init.c -then -report
 
 mqtt_GetPacketId:
 	frama-c -wp -rte $(FRAMAC) MQTT_GetPacketId.c -then -report
+
+mqtt_Connect:
+	frama-c -wp -rte $(FRAMAC) MQTT_Connect.c -then -report
 
 fc: 
 	frama-c -wp -rte $(FRAMAC) mqtt_fc.h -then -report

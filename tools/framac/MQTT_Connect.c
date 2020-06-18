@@ -1,4 +1,6 @@
-#include "mqtt_fc.h"
+#include "mqtt.h"
+
+#define size_t MQTT_PACKET_CONNECT_HEADER_SIZE = 0
 
 /*
 MQTT_Connect:
@@ -26,7 +28,7 @@ static MQTTStatus_t receiveConnack( MQTTContext_t * const pContext,
                                     uint32_t timeoutMs,
                                     MQTTPacketInfo_t * const pIncomingPacket,
                                     bool * const pSessionPresent );
-assert
+assert -- in MQTT_utils
 MQTT_GetIncomingPacketTypeAndLength   
 calculateElapsedTime  
 getTimeStamp       
@@ -36,7 +38,7 @@ MQTT_DeserializeAck
 static int32_t sendPacket( MQTTContext_t * pContext,
                            const uint8_t * pBufferToSend,
                            size_t bytesToSend );
-assert
+assert -- in MQTT_utils
 getTime
 send
 
@@ -49,7 +51,7 @@ MQTTStatus_t MQTT_Connect( MQTTContext_t * const pContext,
 */
 
 
-/*
+/*@
   requires \valid(pConnectInfo);
   requires \valid(pWillInfo);
   requires \valid(pRemainingLength);
@@ -61,13 +63,13 @@ MQTTStatus_t MQTT_Connect( MQTTContext_t * const pContext,
     assumes pConnectInfo == NULL || pRemainingLength == NULL || pPacketSize == NULL || 
       pConnectInfo->clientIdentifierLength == 0U  || pConnectInfo->pClientIdentifier == NULL;
     assigns \nothing;
-    \result === MQTTBadParameter;
+    ensures \result == MQTTBadParameter;
 
   behavior nonNullInput:
     assumes pConnectInfo != NULL && pRemainingLength != NULL && pPacketSize != NULL &&
       (pConnectInfo->clientIdentifierLength != 0U  && pConnectInfo->pClientIdentifier != NULL);
 
-  complete behavior;
+  complete behaviors;
   disjoint behaviors;
 
 */
