@@ -302,10 +302,9 @@ MQTTStatus_t MQTT_Disconnect( MQTTContext_t * const pContext );
 MQTTStatus_t MQTT_ProcessLoop( MQTTContext_t * const pContext,
                                uint32_t timeoutMs );
 
-// NB:     ensures (\old(pContext->nextPacketId) + 1 != 0U) ==> (pContext->nextPacketId == \old(pContext->nextPacketId)) + 1;
-
 /*@
-  requires \valid(pContext);  
+  requires \valid(pContext);
+  requires 0U <= pContext->nextPacketId <= ~0U;
 
   behavior nullpContext:
     assumes pContext == NULL; 
@@ -316,7 +315,8 @@ MQTTStatus_t MQTT_ProcessLoop( MQTTContext_t * const pContext,
     assumes pContext != NULL; 
     assigns pContext->nextPacketId;  
     ensures \result == \old(pContext->nextPacketId);
-    ensures pContext->nextPacketId != 0;
+    ensures ((\old(pContext->nextPacketId) + 1) % (1<<16) != 0U) ==> (pContext->nextPacketId == (\old(pContext->nextPacketId) + 1) % (1<<16));
+    ensures ((\old(pContext->nextPacketId) + 1) % (1<<16) == 0U) ==> (pContext->nextPacketId == (\old(pContext->nextPacketId) + 2) % (1<<16));
 
   complete behaviors;
   disjoint behaviors;  

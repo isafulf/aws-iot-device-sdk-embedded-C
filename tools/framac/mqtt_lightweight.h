@@ -24,7 +24,7 @@
 
 /* bools are only defined in C99+ */
 #if defined( __cplusplus ) || __STDC_VERSION__ >= 199901L
-    #include <stdbool.h>
+    MQTT_PACKET_CONNECT_HEADER_SIZE
 #elif !defined( bool )
     #define bool     signed char
     #define false    0
