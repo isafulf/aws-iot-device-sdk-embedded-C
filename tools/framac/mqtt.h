@@ -141,25 +141,25 @@ struct MQTTContext
   requires \valid(pTransportInterface);
   requires \valid(pCallbacks);
   requires \valid(pNetworkBuffer);
-
   requires \separated(pContext, pTransportInterface, pCallbacks, pNetworkBuffer);
+
+  assigns pContext->connectStatus;
+  assigns pContext->transportInterface;
+  assigns pContext->callbacks;
+  assigns pContext->networkBuffer;
+  assigns pContext->nextPacketId;
   
   behavior nullInput:
     assumes pContext == ((void *)0) || pTransportInterface == ((void *)0) || pCallbacks == ((void *)0) || pNetworkBuffer == ((void *)0); 
-
-    assigns \nothing;
-    
+    ensures pContext->connectStatus == \old(pContext->connectStatus);
+    ensures pContext->transportInterface == \old(pContext->transportInterface);
+    ensures pContext->callbacks == \old(pContext->callbacks);
+    ensures pContext->networkBuffer == \old(pContext->networkBuffer);
+    ensures pContext->nextPacketId == \old(pContext->nextPacketId);
     ensures \result == MQTTBadParameter;
 
   behavior nonNullInput:
     assumes pContext != ((void *)0) && pTransportInterface != ((void *)0) && pCallbacks != ((void *)0) && pNetworkBuffer != ((void *)0);
-
-    assigns pContext->connectStatus;
-    assigns pContext->transportInterface;
-    assigns pContext->callbacks;
-    assigns pContext->networkBuffer;
-    assigns pContext->nextPacketId;
-
     ensures pContext->connectStatus == MQTTNotConnected;
     ensures pContext->transportInterface == *pTransportInterface;
     ensures pContext->callbacks == *pCallbacks;
@@ -306,14 +306,15 @@ MQTTStatus_t MQTT_ProcessLoop( MQTTContext_t * const pContext,
   requires \valid(pContext);
   requires 0U <= pContext->nextPacketId <= ~0U;
 
+  assigns pContext->nextPacketId;  
+
   behavior nullpContext:
     assumes pContext == NULL; 
-    assigns \nothing; 
+    ensures pContext->nextPacketId == \old(pContext->nextPacketId); 
     ensures \result == 0U;
 
   behavior nonNullpContext:
     assumes pContext != NULL; 
-    assigns pContext->nextPacketId;  
     ensures \result == \old(pContext->nextPacketId);
     ensures ((\old(pContext->nextPacketId) + 1) % (1<<16) != 0U) ==> (pContext->nextPacketId == (\old(pContext->nextPacketId) + 1) % (1<<16));
     ensures ((\old(pContext->nextPacketId) + 1) % (1<<16) == 0U) ==> (pContext->nextPacketId == (\old(pContext->nextPacketId) + 2) % (1<<16));

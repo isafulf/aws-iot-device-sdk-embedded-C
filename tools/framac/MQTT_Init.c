@@ -18,9 +18,8 @@ MQTT_Init(MQTTContext_t *const pContext,
            "pCallbacks=%p "
            "pNetworkBuffer=%p.",
            pContext, pTransportInterface, pCallbacks, pNetworkBuffer);
-    printf("\r\n")
-
-        ;
+    printf("\r\n");
+    
     status = MQTTBadParameter;
   } else {
         memset(pContext, 0x00, sizeof(*pContext));
