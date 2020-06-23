@@ -51,8 +51,11 @@ mqtt_GetPacketId:
 mqtt_Connect:
 	frama-c -wp -rte $(FRAMAC) MQTT_Connect.c -then -report
 
-deserializeConnack:
-	frama-c -wp -rte $(FRAMAC) deserializeConnack.c -then -report
+deserializeFunctions:
+	frama-c -wp -rte $(FRAMAC) deserializeFunctions.c -then -report
+	
+deserializePublish:
+	frama-c -wp -rte $(FRAMAC) deserializePublish.c -then -report
 
 fc: 
 	frama-c -wp -rte $(FRAMAC) mqtt_fc.h -then -report
