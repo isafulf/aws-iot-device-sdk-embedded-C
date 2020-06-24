@@ -24,26 +24,24 @@ static MQTTStatus_t deserializeConnack( const MQTTPacketInfo_t * const pConnack,
 static MQTTStatus_t readSubackStatus( size_t statusCount,
                                       const uint8_t * pStatusStart);       
 
-extern int printf(const char *__restrict __format, ...);
-
 #define LogDebug( message )
 #define LogError( message )
-#define MQTT_PACKET_SIMPLE_ACK_REMAINING_LENGTH     ( ( uint8_t ) 2 ) /**< @brief PUBACK, PUBREC, PUBREl, PUBCOMP, UNSUBACK Remaining length. */
+#define LogWarn( message )
+#define LogInfo( message )
 
-extern void assert(bool assertion);
+#define MQTT_PACKET_SIMPLE_ACK_REMAINING_LENGTH     ( ( uint8_t ) 2 ) /**< @brief PUBACK, PUBREC, PUBREl, PUBCOMP, UNSUBACK Remaining length. */
+#define MQTT_PACKET_PINGRESP_REMAINING_LENGTH       ( 0U )            /**< @brief A PINGRESP packet always has a "Remaining length" of 0. */
+#define MQTT_PACKET_CONNACK_SESSION_PRESENT_MASK    ( ( uint8_t ) 0x01U ) /**< @brief The "Session Present" bit is always the lowest bit. */
+#define MQTT_PACKET_CONNACK_REMAINING_LENGTH        ( ( uint8_t ) 2U )    /**< @brief A CONNACK packet always has a "Remaining length" of 2. */
+#define UINT8_CHECK_BIT( x, position )    ( ( ( x ) & ( 0x01U << ( position ) ) ) == ( 0x01U << ( position ) ) )
+
+#define UINT16_DECODE( ptr )                                \
+    ( uint16_t ) ( ( ( ( uint16_t ) ( *( ptr ) ) ) << 8 ) | \
+                   ( ( uint16_t ) ( *( ( ptr ) + 1 ) ) ) )
 
 /*@
  assigns \nothing;
 */
 static void logConnackResponse( uint8_t responseCode );
-
-
-
-/*@
- assigns \nothing;
-*/
-extern void __assert_fail (const char *__assertion, const char *__file,
-      unsigned int __line, const char *__function)
-     __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 
 #endif                                    

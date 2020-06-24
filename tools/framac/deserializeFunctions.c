@@ -22,6 +22,7 @@ struct MQTTPacketInfo
     };
 */
 
+
 /*@
     requires \valid(pIncomingPacket);
     requires \valid(pPacketId);
@@ -132,27 +133,23 @@ static MQTTStatus_t deserializeSimpleAck( const MQTTPacketInfo_t * const pAck,
 {
     MQTTStatus_t status = MQTTSuccess;
 
-    // assert( pAck != NULL );
-   ((void) sizeof ((pAck != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-    pAck != ((void *)0)) ; else __assert_fail ("pAck != NULL", "mqtt_lightweight.c", 1115, __extension__ __PRETTY_FUNCTION__); }));
-    
-    // assert( pPacketIdentifier != NULL );
-   ((void) sizeof ((pPacketIdentifier != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-    pPacketIdentifier != ((void *)0)) ; else __assert_fail ("pPacketIdentifier != NULL", "mqtt_lightweight.c", 1116, __extension__ __PRETTY_FUNCTION__); }));
+    assert( pAck != NULL );
+    assert( pPacketIdentifier != NULL );
 
     /* Check that the "Remaining length" of the received ACK is 2. */
-    if( pAck->remainingLength != ( ( uint8_t ) 2 ) )
+    if( pAck->remainingLength != MQTT_PACKET_SIMPLE_ACK_REMAINING_LENGTH )
     {
-        printf( "ACK does not have remaining length of %d.",( ( uint8_t ) 2 ) );
+        LogError( ( "ACK does not have remaining length of %d.",
+                    MQTT_PACKET_SIMPLE_ACK_REMAINING_LENGTH ) );
 
         status = MQTTBadResponse;
     }
     else
     {
         /* Extract the packet identifier (third and fourth bytes) from ACK. */
-        *pPacketIdentifier = ( uint16_t ) ( ( ( ( uint16_t ) ( *( pAck->pRemainingData ) ) ) << 8 ) | ( ( uint16_t ) ( *( ( pAck->pRemainingData ) + 1 ) ) ) );
+        *pPacketIdentifier = UINT16_DECODE( pAck->pRemainingData );
 
-        printf( "Packet identifier %hu.", *pPacketIdentifier);
+        LogDebug( ( "Packet identifier %hu.", *pPacketIdentifier ) );
 
         /* Packet identifier cannot be 0. */
         if( *pPacketIdentifier == 0U )
@@ -163,7 +160,6 @@ static MQTTStatus_t deserializeSimpleAck( const MQTTPacketInfo_t * const pAck,
 
     return status;
 }
-
 
 /*@
     requires \valid(pPingresp);
@@ -177,14 +173,13 @@ static MQTTStatus_t deserializePingresp( const MQTTPacketInfo_t * const pPingres
 {
     MQTTStatus_t status = MQTTSuccess;
 
-    // assert( pPingresp != NULL );
-   ((void) sizeof ((pPingresp != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-   pPingresp != ((void *)0)) ; else __assert_fail ("pPingresp != NULL", "mqtt_lightweight.c", 1149, __extension__ __PRETTY_FUNCTION__); }));
+    assert( pPingresp != NULL );
 
     /* Check the "Remaining length" (second byte) of the received PINGRESP is 0. */
-    if( pPingresp->remainingLength != ( 0U ) )
+    if( pPingresp->remainingLength != MQTT_PACKET_PINGRESP_REMAINING_LENGTH )
     {
-        printf( "PINGRESP does not have remaining length of %d.", ( 0U ));
+        LogError( ( "PINGRESP does not have remaining length of %d.",
+                    MQTT_PACKET_PINGRESP_REMAINING_LENGTH ) );
 
         status = MQTTBadResponse;
     }
@@ -204,13 +199,9 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
     uint8_t subscriptionStatus = 0;
     size_t i = 0;
 
-    //assert( pStatusStart != NULL );
-   ((void) sizeof ((pStatusStart != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-   pStatusStart != ((void *)0)) ; else __assert_fail ("pStatusStart != NULL", "mqtt_lightweight.c", 889, __extension__ __PRETTY_FUNCTION__); }));
-
+    assert( pStatusStart != NULL );
 
     /* Iterate through each status byte in the SUBACK packet. */
-
     /*@
         loop invariant 0 <= i <= statusCount;
         loop assigns i, subscriptionStatus, status;
@@ -228,13 +219,13 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
             case 0x01:
             case 0x02:
 
-                printf( "Topic filter %lu accepted, max QoS %hhu.",
-                            ( unsigned long ) i, subscriptionStatus);
+                LogDebug( ( "Topic filter %lu accepted, max QoS %hhu.",
+                            ( unsigned long ) i, subscriptionStatus ) );
                 break;
 
             case 0x80:
 
-                printf( "Topic filter %lu refused.", ( unsigned long ) i );
+                LogDebug( ( "Topic filter %lu refused.", ( unsigned long ) i ) );
 
                 /* Application should remove subscription from the list */
                 status = MQTTServerRefused;
@@ -242,7 +233,7 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
                 break;
 
             default:
-                printf( "Bad SUBSCRIBE status %hhu.", subscriptionStatus);
+                LogDebug( ( "Bad SUBSCRIBE status %hhu.", subscriptionStatus ) );
 
                 status = MQTTBadResponse;
 
@@ -285,31 +276,25 @@ static MQTTStatus_t deserializeSuback( const MQTTPacketInfo_t * const pSuback,
 {
     MQTTStatus_t status = MQTTSuccess;
 
-    // assert( pSuback != NULL );
-    ((void) sizeof ((pSuback != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-    pSuback != ((void *)0)) ; else __assert_fail ("pSuback != NULL", "mqtt_lightweight.c", 942, __extension__ __PRETTY_FUNCTION__); }));
-
-    // assert( pPacketIdentifier != NULL );
-    ((void) sizeof ((pPacketIdentifier != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-    pPacketIdentifier != ((void *)0)) ; else __assert_fail ("pPacketIdentifier != NULL", "mqtt_lightweight.c", 943, __extension__ __PRETTY_FUNCTION__); }));
+    assert( pSuback != NULL );
+    assert( pPacketIdentifier != NULL );
 
     size_t remainingLength = pSuback->remainingLength;
     const uint8_t * pVariableHeader = pSuback->pRemainingData;
-
 
     /* A SUBACK must have a remaining length of at least 3 to accommodate the
      * packet identifier and at least 1 return code. */
     if( remainingLength < 3U )
     {
-        printf("SUBACK cannot have a remaining length less than 3.");
+        LogDebug( ( "SUBACK cannot have a remaining length less than 3." ) );
         status = MQTTBadResponse;
     }
     else
     {
         /* Extract the packet identifier (first 2 bytes of variable header) from SUBACK. */
-       *pPacketIdentifier = ( uint16_t ) ( ( ( ( uint16_t ) ( *( pVariableHeader ) ) ) << 8 ) | ( ( uint16_t ) ( *( ( pVariableHeader ) + 1 ) ) ) );
+        *pPacketIdentifier = UINT16_DECODE( pVariableHeader );
 
-        printf( "Packet identifier %hu.", *pPacketIdentifier);
+        LogDebug( ( "Packet identifier %hu.", *pPacketIdentifier ) );
 
         status = readSubackStatus( remainingLength - sizeof( uint16_t ),
                                    pVariableHeader + sizeof( uint16_t ) );
@@ -317,7 +302,6 @@ static MQTTStatus_t deserializeSuback( const MQTTPacketInfo_t * const pSuback,
 
     return status;
 }
-
 
 /*@
     requires \valid(pConnack);
@@ -352,22 +336,16 @@ static MQTTStatus_t deserializeConnack( const MQTTPacketInfo_t * const pConnack,
 {
     MQTTStatus_t status = MQTTSuccess;
 
-    // assert( pConnack != NULL );
-   ((void) sizeof ((pConnack != ((void *)0)) ? 1 : 0), __extension__ ({ if (pConnack !=
-   ((void *)0)) ; else __assert_fail ("pConnack != NULL", "mqtt_lightweight.c", 742, __extension__ __PRETTY_FUNCTION__); }));
-    
-    // assert( pSessionPresent != NULL );
-   ((void) sizeof ((pSessionPresent != ((void *)0)) ? 1 : 0), __extension__ ({ if (
-   pSessionPresent != ((void *)0)) ; else __assert_fail ("pSessionPresent != NULL", "mqtt_lightweight.c", 743, __extension__ __PRETTY_FUNCTION__); }));
-
+    assert( pConnack != NULL );
+    assert( pSessionPresent != NULL );
     const uint8_t * pRemainingData = pConnack->pRemainingData;
 
     /* According to MQTT 3.1.1, the second byte of CONNACK must specify a
      * "Remaining length" of 2. */
-    if( pConnack->remainingLength != ( ( uint8_t ) 2U ) )
+    if( pConnack->remainingLength != MQTT_PACKET_CONNACK_REMAINING_LENGTH )
     {
-        printf("CONNACK does not have remaining length of %d.",
-                   ( uint8_t ) 2U  );
+        LogError( ( "CONNACK does not have remaining length of %d.",
+                    MQTT_PACKET_CONNACK_REMAINING_LENGTH ) );
 
         status = MQTTBadResponse;
     }
@@ -376,7 +354,7 @@ static MQTTStatus_t deserializeConnack( const MQTTPacketInfo_t * const pConnack,
      * in CONNACK must be 0. */
     else if( ( pRemainingData[ 0 ] | 0x01U ) != 0x01U )
     {
-        printf("Reserved bits in CONNACK incorrect.");
+        LogError( ( "Reserved bits in CONNACK incorrect." ) );
 
         status = MQTTBadResponse;
     }
@@ -384,10 +362,10 @@ static MQTTStatus_t deserializeConnack( const MQTTPacketInfo_t * const pConnack,
     {
         /* Determine if the "Session Present" bit is set. This is the lowest bit of
          * the second byte in CONNACK. */
-        if( ( pRemainingData[ 0 ] & ( ( uint8_t ) 0x01U ) )
-            == ( ( uint8_t ) 0x01U ) )
+        if( ( pRemainingData[ 0 ] & MQTT_PACKET_CONNACK_SESSION_PRESENT_MASK )
+            == MQTT_PACKET_CONNACK_SESSION_PRESENT_MASK )
         {
-            printf("CONNACK session present bit set.");
+            LogWarn( ( "CONNACK session present bit set." ) );
             *pSessionPresent = true;
 
             /* MQTT 3.1.1 specifies that the fourth byte in CONNACK must be 0 if the
@@ -399,7 +377,7 @@ static MQTTStatus_t deserializeConnack( const MQTTPacketInfo_t * const pConnack,
         }
         else
         {
-            printf("CONNACK session present bit not set.");
+            LogInfo( ( "CONNACK session present bit not set." ) );
         }
     }
 
@@ -408,8 +386,8 @@ static MQTTStatus_t deserializeConnack( const MQTTPacketInfo_t * const pConnack,
         /* In MQTT 3.1.1, only values 0 through 5 are valid CONNACK response codes. */
         if( pRemainingData[ 1 ] > 5U )
         {
-            printf( "CONNACK response %hhu is not valid.",
-                        pRemainingData[ 1 ]);
+            LogError( ( "CONNACK response %hhu is not valid.",
+                        pRemainingData[ 1 ] ) );
 
             status = MQTTBadResponse;
         }
