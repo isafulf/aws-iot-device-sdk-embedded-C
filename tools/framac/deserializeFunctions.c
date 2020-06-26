@@ -22,13 +22,279 @@ struct MQTTPacketInfo
     };
 */
 
+/*@
+    requires \valid(pIncomingPacket);
+    requires \valid(pIncomingPacket->pRemainingData + (0 .. pIncomingPacket->remainingLength - 1));
+    requires \valid(pPacketId);
+    requires \valid(pPublishInfo);
+    requires \valid(pPublishInfo->pTopicName + (0 .. pPublishInfo->topicNameLength - 1));
+    requires 0 <= (*pIncomingPacket->pRemainingData << 8)  < 1 << 16;
+    requires 0 <= pIncomingPacket->type <= 1 << 8;
+    requires 0 <= ( pIncomingPacket->type & 0x0FU ) < 1<<8;
+    requires 0 <= (uint16_t) *(const uint8_t *) ( pPublishInfo->pTopicName + pPublishInfo->topicNameLength ) <<8 <= 1 << 16;
+    requires pPublishInfo->qos == MQTTQoS0 || pPublishInfo->qos == MQTTQoS1 || pPublishInfo->qos == MQTTQoS2;
+    requires 0 <= pPublishInfo->topicNameLength + sizeof( uint16_t ) <= SIZE_MAX - 2U; 
+    requires 0 <= ( uint16_t ) ( ( ( ( uint16_t ) ( *( pIncomingPacket->pRemainingData ) ) ) << 8 ) | ( ( uint16_t ) ( *( ( pIncomingPacket->pRemainingData ) + 1 ) ) ) ) + sizeof( uint16_t ) <= SIZE_MAX - 2U; 
+
+    ensures pIncomingPacket == NULL || pPacketId == NULL || pPublishInfo == NULL ==> \result == MQTTBadParameter;
+    ensures ( pIncomingPacket->type & 0xF0U ) != MQTT_PACKET_TYPE_PUBLISH ==> \result == MQTTBadParameter;
+*/
+MQTTStatus_t MQTT_DeserializePublish( const MQTTPacketInfo_t * const pIncomingPacket,
+                                      uint16_t * const pPacketId,
+                                      MQTTPublishInfo_t * const pPublishInfo )
+{
+    MQTTStatus_t status = MQTTSuccess;
+
+    if( ( pIncomingPacket == NULL ) || ( pPacketId == NULL ) || ( pPublishInfo == NULL ) )
+    {
+        LogError( ( "Argument cannot be NULL: pIncomingPacket=%p, "
+                    "pPacketId=%p, pPublishInfo=%p",
+                    pIncomingPacket,
+                    pPacketId,
+                    pPublishInfo ) );
+        status = MQTTBadParameter;
+    }
+    else if( ( pIncomingPacket->type & 0xF0U ) != MQTT_PACKET_TYPE_PUBLISH )
+    {
+        LogError( ( "Packet is not publish. Packet type: %hu.",
+                    pIncomingPacket->type ) );
+        status = MQTTBadParameter;
+    }
+    else
+    {
+        status = deserializePublish( pIncomingPacket, pPacketId, pPublishInfo );
+    }
+
+    return status;
+}
+
+//         requires 0 <= UINT16_DECODE( pIncomingPacket->pRemainingData ) <= SIZE_MAX - 2U;
+
+/*@
+    requires \valid(pIncomingPacket);
+    requires \valid(pIncomingPacket->pRemainingData + (0 .. pIncomingPacket->remainingLength - 1));
+    requires \valid(pPacketId);
+    requires \valid(pPublishInfo);
+    requires \valid(pPublishInfo->pTopicName + (0 .. pPublishInfo->topicNameLength - 1));
+    requires 0 <= (*pIncomingPacket->pRemainingData << 8)  < 1 << 16;
+    requires 0 <= ( pIncomingPacket->type & 0x0FU ) < 1<<8;
+    requires pPublishInfo->qos == MQTTQoS0 || pPublishInfo->qos == MQTTQoS1 || pPublishInfo->qos == MQTTQoS2;
+    requires 0 <= pPublishInfo->topicNameLength + sizeof( uint16_t ) <= SIZE_MAX - 2U; 
+    requires 0 <= ( uint16_t ) ( ( ( ( uint16_t ) ( *( pIncomingPacket->pRemainingData ) ) ) << 8 ) | ( ( uint16_t ) ( *( ( pIncomingPacket->pRemainingData ) + 1 ) ) ) ) + sizeof( uint16_t ) <= SIZE_MAX - 2U; 
+
+    assigns pPublishInfo->pTopicName;
+    assigns pPublishInfo->qos;
+    assigns pPublishInfo->retain;
+    assigns pPublishInfo->topicNameLength;
+    assigns pPublishInfo->payloadLength;
+    assigns pPublishInfo->pPayload;
+    assigns *pPacketId;
+*/
+static MQTTStatus_t deserializePublish( const MQTTPacketInfo_t * const pIncomingPacket,
+                                        uint16_t * const pPacketId,
+                                        MQTTPublishInfo_t * const pPublishInfo )
+{
+    MQTTStatus_t status = MQTTSuccess;
+
+    assert( pIncomingPacket != NULL );
+    assert( pPacketId != NULL );
+    assert( pPublishInfo != NULL );
+    const uint8_t * pVariableHeader = pIncomingPacket->pRemainingData, * pPacketIdentifierHigh;
+    /* The flags are the lower 4 bits of the first byte in PUBLISH. */
+    status = processPublishFlags( ( pIncomingPacket->type & 0x0FU ), pPublishInfo );
+
+    if( status == MQTTSuccess )
+    {
+        /* Sanity checks for "Remaining length". A QoS 0 PUBLISH  must have a remaining
+         * length of at least 3 to accommodate topic name length (2 bytes) and topic
+         * name (at least 1 byte). A QoS 1 or 2 PUBLISH must have a remaining length of
+         * at least 5 for the packet identifier in addition to the topic name length and
+         * topic name. */
+        status = checkPublishRemainingLength( pIncomingPacket->remainingLength,
+                                              pPublishInfo->qos,
+                                              MQTT_MIN_PUBLISH_REMAINING_LENGTH_QOS0 );
+    }
+
+    if( status == MQTTSuccess )
+    {
+        /* Extract the topic name starting from the first byte of the variable header.
+         * The topic name string starts at byte 3 in the variable header. */
+        pPublishInfo->topicNameLength = UINT16_DECODE( pVariableHeader );
+
+        /* Sanity checks for topic name length and "Remaining length". The remaining
+         * length must be at least as large as the variable length header. */
+        status = checkPublishRemainingLength( pIncomingPacket->remainingLength,
+                                              pPublishInfo->qos,
+                                              pPublishInfo->topicNameLength + sizeof( uint16_t ) );
+    }
+
+    if( status == MQTTSuccess )
+    {
+        /* Parse the topic. */
+        pPublishInfo->pTopicName = ( const char * ) ( pVariableHeader + sizeof( uint16_t ) );
+        LogDebug( ( "Topic name length %hu: %.*s",
+                    pPublishInfo->topicNameLength,
+                    pPublishInfo->topicNameLength,
+                    pPublishInfo->pTopicName ) );
+
+        /* Extract the packet identifier for QoS 1 or 2 PUBLISH packets. Packet
+         * identifier starts immediately after the topic name. */
+        pPacketIdentifierHigh = ( const uint8_t * ) ( pPublishInfo->pTopicName + pPublishInfo->topicNameLength );
+
+        if( pPublishInfo->qos > MQTTQoS0 )
+        {
+           // *pPacketId = UINT16_DECODE( pPacketIdentifierHigh );
+
+            LogDebug( ( "Packet identifier %hu.", *pPacketId ) );
+
+            /* Packet identifier cannot be 0. */
+            if( *pPacketId == 0U )
+            {
+                status = MQTTBadResponse;
+            }
+        }
+    }
+
+    if( status == MQTTSuccess )
+    {
+        /* Calculate the length of the payload. QoS 1 or 2 PUBLISH packets contain
+         * a packet identifier, but QoS 0 PUBLISH packets do not. */
+        if( pPublishInfo->qos == MQTTQoS0 )
+        {
+            pPublishInfo->payloadLength = ( pIncomingPacket->remainingLength - pPublishInfo->topicNameLength - sizeof( uint16_t ) );
+            pPublishInfo->pPayload = pPacketIdentifierHigh;
+        }
+        else
+        {
+            pPublishInfo->payloadLength = ( pIncomingPacket->remainingLength - pPublishInfo->topicNameLength - 2U * sizeof( uint16_t ) );
+            pPublishInfo->pPayload = pPacketIdentifierHigh + sizeof( uint16_t );
+        }
+
+        LogDebug( ( "Payload length %hu.", pPublishInfo->payloadLength ) );
+    }
+
+    return status;
+}
+
+//    requires \valid((const uint8_t *)pPublishInfo->pPayload + pPublishInfo->payloadLength - 1);
+
+/*@
+    requires \valid(pPublishInfo);
+    requires \valid(pPublishInfo->pTopicName + (0 .. pPublishInfo->topicNameLength - 1));
+
+    requires 0 <= publishFlags < 1<<8;
+    assigns pPublishInfo->qos;
+    assigns pPublishInfo->retain;
+
+    ensures \result == MQTTSuccess ==> pPublishInfo->qos == MQTTQoS0 || pPublishInfo->qos == MQTTQoS1 || pPublishInfo->qos == MQTTQoS2;
+*/
+static MQTTStatus_t processPublishFlags( uint8_t publishFlags,
+                                         MQTTPublishInfo_t * const pPublishInfo )
+{
+    MQTTStatus_t status = MQTTSuccess;
+
+    assert( pPublishInfo != NULL );
+
+    /* Check for QoS 2. */
+    if( UINT8_CHECK_BIT( publishFlags, MQTT_PUBLISH_FLAG_QOS2 ) )
+    {
+        /* PUBLISH packet is invalid if both QoS 1 and QoS 2 bits are set. */
+        if( UINT8_CHECK_BIT( publishFlags, MQTT_PUBLISH_FLAG_QOS1 ) )
+        {
+            LogDebug( ( "Bad QoS: 3." ) );
+
+            status = MQTTBadResponse;
+        }
+        else
+        {
+            pPublishInfo->qos = MQTTQoS2;
+        }
+    }
+    /* Check for QoS 1. */
+    else if( UINT8_CHECK_BIT( publishFlags, MQTT_PUBLISH_FLAG_QOS1 ) )
+    {
+        pPublishInfo->qos = MQTTQoS1;
+    }
+    /* If the PUBLISH isn't QoS 1 or 2, then it's QoS 0. */
+    else
+    {
+        pPublishInfo->qos = MQTTQoS0;
+    }
+
+    if( status == MQTTSuccess )
+    {
+        LogDebug( ( "QoS is %d.", pPublishInfo->qos ) );
+
+        /* Parse the Retain bit. */
+        pPublishInfo->retain = UINT8_CHECK_BIT( publishFlags, MQTT_PUBLISH_FLAG_RETAIN );
+
+        LogDebug( ( "Retain bit is %d.", pPublishInfo->retain ) );
+
+        /* Parse the DUP bit. */
+        if( UINT8_CHECK_BIT( publishFlags, MQTT_PUBLISH_FLAG_DUP ) )
+        {
+            LogDebug( ( "DUP is 1." ) );
+        }
+        else
+        {
+            LogDebug( ( "DUP is 0." ) );
+        }
+    }
+
+    return status;
+}
+
+/*@
+    requires qos == MQTTQoS0 || qos == MQTTQoS1 || qos == MQTTQoS2;
+    requires 0 <= remainingLength <= SIZE_MAX; 
+    requires 0 <= qos0Minimum <= SIZE_MAX - 2U; 
+    assigns \nothing;
+    ensures qos == 0 && remainingLength < qos0Minimum ==> \result == MQTTBadResponse;
+    ensures qos == 0 && remainingLength >= qos0Minimum ==> \result == MQTTSuccess;
+    ensures qos != 0 && remainingLength < ( qos0Minimum + 2U ) ==> \result == MQTTBadResponse;
+    ensures qos != 0 && remainingLength >= ( qos0Minimum + 2U ) ==> \result == MQTTSuccess;
+*/
+static MQTTStatus_t checkPublishRemainingLength( size_t remainingLength,
+                                                 MQTTQoS_t qos,
+                                                 size_t qos0Minimum )
+{
+    MQTTStatus_t status = MQTTSuccess;
+
+    /* Sanity checks for "Remaining length". */
+    if( qos == MQTTQoS0 )
+    {
+        /* Check that the "Remaining length" is greater than the minimum. */
+        if( remainingLength < qos0Minimum )
+        {
+            LogDebug( ( "QoS 0 PUBLISH cannot have a remaining length less than %lu.",
+                        qos0Minimum ) );
+
+            status = MQTTBadResponse;
+        }
+    }
+    else
+    {
+        /* Check that the "Remaining length" is greater than the minimum. For
+         * QoS 1 or 2, this will be two bytes greater than for QoS 0 due to the
+         * packet identifier. */
+        if( remainingLength < ( qos0Minimum + 2U ) )
+        {
+            LogDebug( ( "QoS 1 or 2 PUBLISH cannot have a remaining length less than %lu.",
+                        qos0Minimum + 2U ) );
+
+            status = MQTTBadResponse;
+        }
+    }
+
+    return status;
+}
 
 /*@
     requires \valid(pIncomingPacket);
     requires \valid(pPacketId);
     requires \valid(pSessionPresent);
     requires 0 <= pIncomingPacket->remainingLength <= SIZE_MAX;
-    requires 0 <= (*pIncomingPacket->pRemainingData << 8)  <= 1 << 16;
+    requires 0 <= (*pIncomingPacket->pRemainingData << 8)  < 1 << 16;
     requires \valid(pIncomingPacket->pRemainingData + (0 .. pIncomingPacket->remainingLength - 1));
     assigns *pPacketId, *pSessionPresent;
 
@@ -120,7 +386,7 @@ MQTTStatus_t MQTT_DeserializeAck( const MQTTPacketInfo_t * const pIncomingPacket
     requires \valid(pPacketIdentifier);
     requires 0 <= pAck->remainingLength <= SIZE_MAX;
     requires \valid(pAck->pRemainingData + (0 .. pAck->remainingLength - 1));
-    requires 0 <= (*pAck->pRemainingData << 8)  <= 1 << 16;
+    requires 0 <= (*pAck->pRemainingData << 8)  < 1 << 16;
     assigns *pPacketIdentifier;
     ensures pAck->remainingLength != ( ( uint8_t ) 2 ) ==> *pPacketIdentifier == \old(*pPacketIdentifier) && \result == MQTTBadResponse;
     ensures pAck->remainingLength == ( ( uint8_t ) 2 ) ==> *pPacketIdentifier == ( uint16_t ) ( ( ( ( uint16_t ) ( *( pAck->pRemainingData ) ) ) << 8 ) | ( ( uint16_t ) ( *( ( pAck->pRemainingData ) + 1 ) ) ) );
@@ -255,7 +521,7 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
     requires 0 <= pSuback->remainingLength <= SIZE_MAX;
     requires \valid(pSuback->pRemainingData + (0 .. pSuback->remainingLength - 1));
     requires \valid(pPacketIdentifier);
-    requires 0 <= (*pSuback->pRemainingData << 8)  <= 1<<16;
+    requires 0 <= (*pSuback->pRemainingData << 8)  < 1<<16;
     requires 0 <= *pPacketIdentifier <= UINT_MAX;
     assigns *pPacketIdentifier;
 

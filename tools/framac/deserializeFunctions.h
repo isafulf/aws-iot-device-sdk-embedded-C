@@ -4,6 +4,23 @@
 #include "mqtt.h"
 #include "mqtt_lightweight.h"
 
+//Main function
+MQTTStatus_t MQTT_DeserializePublish( const MQTTPacketInfo_t * const pIncomingPacket,
+                                      uint16_t * const pPacketId,
+                                      MQTTPublishInfo_t * const pPublishInfo );
+
+//helper functions
+static MQTTStatus_t checkPublishRemainingLength( size_t remainingLength,
+                                                 MQTTQoS_t qos,
+                                                 size_t qos0Minimum );
+
+static MQTTStatus_t processPublishFlags( uint8_t publishFlags,
+                                         MQTTPublishInfo_t * const pPublishInfo );
+
+static MQTTStatus_t deserializePublish( const MQTTPacketInfo_t * const pIncomingPacket,
+                                        uint16_t * const pPacketId,
+                                        MQTTPublishInfo_t * const pPublishInfo );
+
 // Main function
 MQTTStatus_t MQTT_DeserializeAck( const MQTTPacketInfo_t * const pIncomingPacket,
                                   uint16_t * const pPacketId,
@@ -33,11 +50,25 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
 #define MQTT_PACKET_PINGRESP_REMAINING_LENGTH       ( 0U )            /**< @brief A PINGRESP packet always has a "Remaining length" of 0. */
 #define MQTT_PACKET_CONNACK_SESSION_PRESENT_MASK    ( ( uint8_t ) 0x01U ) /**< @brief The "Session Present" bit is always the lowest bit. */
 #define MQTT_PACKET_CONNACK_REMAINING_LENGTH        ( ( uint8_t ) 2U )    /**< @brief A CONNACK packet always has a "Remaining length" of 2. */
-#define UINT8_CHECK_BIT( x, position )    ( ( ( x ) & ( 0x01U << ( position ) ) ) == ( 0x01U << ( position ) ) )
+#define MQTT_MIN_PUBLISH_REMAINING_LENGTH_QOS0    ( 3U )
+#define MQTT_PUBLISH_FLAG_QOS1                      ( 1 ) /**< @brief MQTT PUBLISH QoS1 flag. */
+#define MQTT_PUBLISH_FLAG_QOS2                      ( 2 ) /**< @brief MQTT PUBLISH QoS2 flag. */
+#define MQTT_PUBLISH_FLAG_RETAIN                    ( 0 ) /**< @brief MQTT PUBLISH retain flag. */
+#define MQTT_PUBLISH_FLAG_DUP                       ( 3 ) /**< @brief MQTT PUBLISH duplicate flag. */
 
+
+#define UINT8_CHECK_BIT( x, position )    ( ( ( x ) & ( 0x01U << ( position ) ) ) == ( 0x01U << ( position ) ) )
 #define UINT16_DECODE( ptr )                                \
     ( uint16_t ) ( ( ( ( uint16_t ) ( *( ptr ) ) ) << 8 ) | \
                    ( ( uint16_t ) ( *( ( ptr ) + 1 ) ) ) )
+
+/*@
+ assigns \nothing;
+*/
+extern void __assert (const char *__assertion);
+
+// extern void __assert (const char *__assertion, const char *__file, int __line)
+//      __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 
 /*@
  assigns \nothing;
