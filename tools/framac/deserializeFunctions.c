@@ -39,7 +39,7 @@
     requires is_uint16(*pIncomingPacket->pRemainingData << 8);
     requires is_uint8(pIncomingPacket->type);
     requires is_uint8( pIncomingPacket->type & 0x0FU);
-    requires is_uint16((uint16_t) *(const uint8_t *) ( pPublishInfo->pTopicName + pPublishInfo->topicNameLength ) << 8);
+    requires is_uint16( *(const uint8_t *) ( pPublishInfo->pTopicName + pPublishInfo->topicNameLength ) << 8);
     requires is_size_t((size_t)(pPublishInfo->topicNameLength + sizeof( uint16_t ) + 2U));
     requires add_2_no_overflow(UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ));
 
@@ -316,9 +316,10 @@ static MQTTStatus_t checkPublishRemainingLength( size_t remainingLength,
     behavior badInput:
         assumes pIncomingPacket == NULL ||
             ( ( pPacketId == NULL ) &&
-            ( ( pIncomingPacket->type != ( ( uint8_t ) 0x20U ) ) &&
-            ( pIncomingPacket->type != ( ( uint8_t ) 0xD0U ) ) ) ) ||
-            ( ( pSessionPresent == NULL ) && ( pIncomingPacket->type == ( ( uint8_t ) 0x20U ) ) ) ||
+            ( ( pIncomingPacket->type != MQTT_PACKET_TYPE_CONNACK ) &&
+            ( pIncomingPacket->type != MQTT_PACKET_TYPE_PINGRESP ) ) ) ||
+            ( ( pSessionPresent == NULL ) &&
+            ( pIncomingPacket->type == MQTT_PACKET_TYPE_CONNACK ) ) ||
             ( pIncomingPacket->pRemainingData == NULL );
         ensures *pPacketId == \old(*pPacketId);
         ensures *pSessionPresent == \old(*pSessionPresent); 
