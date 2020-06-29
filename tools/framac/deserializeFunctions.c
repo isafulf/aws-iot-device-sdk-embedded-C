@@ -22,9 +22,6 @@
 
     predicate is_size_t(size_t n) = 
         0 <= n <= SIZE_MAX;
-
-    predicate add_2_no_overflow(integer n) = 
-        0 <= n <= SIZE_MAX - 2U;
 */
 
 /*@
@@ -39,7 +36,7 @@
     requires is_uint8( pIncomingPacket->type & 0x0FU);
     requires is_uint16( *(const uint8_t *) ( pPublishInfo->pTopicName + pPublishInfo->topicNameLength ) << 8);
     requires is_size_t((size_t)(pPublishInfo->topicNameLength + sizeof( uint16_t ) + 2U));
-    requires add_2_no_overflow(UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ));
+    requires 0 <= UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= SIZE_MAX - 2U;
 
     assigns pPublishInfo->pTopicName;
     assigns pPublishInfo->qos;
@@ -91,8 +88,8 @@ MQTTStatus_t MQTT_DeserializePublish( const MQTTPacketInfo_t * const pIncomingPa
     requires is_uint8(pIncomingPacket->type & 0x0FU);
     requires valid_qos(pPublishInfo->qos);
     requires is_size_t((size_t)(pPublishInfo->topicNameLength + sizeof( uint16_t ) + 2U));
-    requires add_2_no_overflow(UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ));
-
+    requires 0 <= UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= SIZE_MAX - 2U;
+  
     assigns pPublishInfo->pTopicName;
     assigns pPublishInfo->qos;
     assigns pPublishInfo->retain;
@@ -256,7 +253,7 @@ static MQTTStatus_t processPublishFlags( uint8_t publishFlags,
 /*@
     requires valid_qos(qos);
     requires is_size_t(remainingLength);
-    requires add_2_no_overflow(qos0Minimum);
+    requires 0 <= qos0Minimum <= SIZE_MAX - 2U;
 
     assigns \nothing;
   
