@@ -1,7 +1,5 @@
 #include "deserializeFunctions.h"
 #include <limits.h>
-#include <stdint.h>
-
 
 /*@
     logic integer UINT16_DECODE_(uint8_t * ptr) =
