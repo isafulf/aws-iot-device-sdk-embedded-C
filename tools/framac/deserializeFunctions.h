@@ -63,7 +63,7 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
                    ( ( uint16_t ) ( *( ( ptr ) + 1 ) ) ) )
 
 /*@
- assigns \nothing;
+    assigns \nothing;
 */
 extern void __assert (const char *__assertion);
 
