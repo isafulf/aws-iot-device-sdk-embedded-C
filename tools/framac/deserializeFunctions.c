@@ -87,7 +87,7 @@ MQTTStatus_t MQTT_DeserializePublish( const MQTTPacketInfo_t * const pIncomingPa
     requires is_uint8(pIncomingPacket->type & 0x0FU);
     requires valid_qos(pPublishInfo->qos);
     requires is_size_t((size_t)(pPublishInfo->topicNameLength + sizeof( uint16_t ) + 2U));
-    requires 0 <= UINT16_DECODE(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= SIZE_MAX - 2U;
+    requires 0 <= UINT16_DECODE(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= UINT_MAX - 2U;
   
     assigns pPublishInfo->pTopicName;
     assigns pPublishInfo->qos;
@@ -252,7 +252,7 @@ static MQTTStatus_t processPublishFlags( uint8_t publishFlags,
 /*@
     requires valid_qos(qos);
     requires is_size_t(remainingLength);
-    requires 0 <= qos0Minimum <= SIZE_MAX - 2U;
+    requires 0 <= qos0Minimum <= UINT_MAX - 2U;
 
     assigns \nothing;
   
