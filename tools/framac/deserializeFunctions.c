@@ -2,9 +2,6 @@
 #include <limits.h>
 
 /*@
-    logic integer UINT16_DECODE_(uint8_t * ptr) =
-        ( uint16_t ) ( ( ( ( uint16_t ) ( *( ptr ) ) ) << 8 ) | ( ( uint16_t ) ( *( ( ptr ) + 1 ) ) ) );
-
     predicate is_uint8(integer n) =
     0 <= n < 1 << 8;
 
@@ -12,7 +9,7 @@
     0 <= n < 1 << 16;
 
     predicate valid_uint8_array(uint8_t* t, size_t length) =
-        \valid(t + (0 .. length -1));
+        \valid(t + (0 .. length -  1));
 
     predicate valid_char_array(char* t, size_t length) =
         \valid(t + (0 .. length - 1));
@@ -21,7 +18,7 @@
         qos == MQTTQoS0 || qos == MQTTQoS1 || qos == MQTTQoS2;
 
     predicate is_size_t(size_t n) = 
-        0 <= n <= SIZE_MAX;
+        0 <= n <= UINT_MAX;
 */
 
 /*@
@@ -29,6 +26,7 @@
     requires \valid(pPacketId);
     requires \valid(pPublishInfo);
     requires valid_uint8_array(pIncomingPacket->pRemainingData, pIncomingPacket->remainingLength);
+    requires \separated(pIncomingPacket, pPacketId, pPublishInfo);
     requires valid_qos(pPublishInfo->qos);
     requires valid_char_array(pPublishInfo->pTopicName, pPublishInfo->topicNameLength);
     requires is_uint16(*pIncomingPacket->pRemainingData << 8);
@@ -36,7 +34,7 @@
     requires is_uint8( pIncomingPacket->type & 0x0FU);
     requires is_uint16( *(const uint8_t *) ( pPublishInfo->pTopicName + pPublishInfo->topicNameLength ) << 8);
     requires is_size_t((size_t)(pPublishInfo->topicNameLength + sizeof( uint16_t ) + 2U));
-    requires 0 <= UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= SIZE_MAX - 2U;
+    requires 0 <= UINT16_DECODE(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= UINT_MAX - 2U;
 
     assigns pPublishInfo->pTopicName;
     assigns pPublishInfo->qos;
@@ -83,12 +81,13 @@ MQTTStatus_t MQTT_DeserializePublish( const MQTTPacketInfo_t * const pIncomingPa
     requires valid_uint8_array(pIncomingPacket->pRemainingData, pIncomingPacket->remainingLength);
     requires \valid(pPacketId);
     requires \valid(pPublishInfo);
+    requires \separated(pIncomingPacket, pPacketId, pPublishInfo);
     requires valid_char_array(pPublishInfo->pTopicName, pPublishInfo->topicNameLength);
     requires is_uint16(*pIncomingPacket->pRemainingData << 8);
     requires is_uint8(pIncomingPacket->type & 0x0FU);
     requires valid_qos(pPublishInfo->qos);
     requires is_size_t((size_t)(pPublishInfo->topicNameLength + sizeof( uint16_t ) + 2U));
-    requires 0 <= UINT16_DECODE_(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= SIZE_MAX - 2U;
+    requires 0 <= UINT16_DECODE(pIncomingPacket->pRemainingData ) + sizeof( uint16_t ) <= SIZE_MAX - 2U;
   
     assigns pPublishInfo->pTopicName;
     assigns pPublishInfo->qos;
@@ -304,6 +303,7 @@ static MQTTStatus_t checkPublishRemainingLength( size_t remainingLength,
     requires is_size_t(pIncomingPacket->remainingLength);
     requires is_uint16(*pIncomingPacket->pRemainingData << 8);
     requires valid_uint8_array(pIncomingPacket->pRemainingData, pIncomingPacket->remainingLength);
+    requires \separated(pIncomingPacket, pPacketId, pSessionPresent);
    
     assigns *pPacketId;
     assigns *pSessionPresent;
@@ -398,11 +398,12 @@ MQTTStatus_t MQTT_DeserializeAck( const MQTTPacketInfo_t * const pIncomingPacket
     requires is_size_t(pAck->remainingLength);
     requires valid_uint8_array(pAck->pRemainingData, pAck->remainingLength);
     requires is_uint16(*pAck->pRemainingData << 8);
+    requires \separated(pAck, pPacketIdentifier);
   
     assigns *pPacketIdentifier;
   
     ensures pAck->remainingLength != ( ( uint8_t ) 2 ) ==> *pPacketIdentifier == \old(*pPacketIdentifier) && \result == MQTTBadResponse;
-    ensures pAck->remainingLength == ( ( uint8_t ) 2 ) ==> *pPacketIdentifier == UINT16_DECODE_(pAck->pRemainingData);
+    ensures pAck->remainingLength == ( ( uint8_t ) 2 ) ==> *pPacketIdentifier == UINT16_DECODE(pAck->pRemainingData);
     ensures pAck->remainingLength == ( ( uint8_t ) 2 ) && *pPacketIdentifier == 0U ==> \result == MQTTBadResponse;
     ensures pAck->remainingLength == ( ( uint8_t ) 2 ) && *pPacketIdentifier != 0U ==> \result == MQTTSuccess;
 
@@ -539,6 +540,7 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
     requires \valid(pPacketIdentifier);
     requires is_uint16(*pSuback->pRemainingData << 8);
     requires is_uint16(*pPacketIdentifier);
+    requires \separated(pSuback, pPacketIdentifier);
   
     assigns *pPacketIdentifier;
 
@@ -549,7 +551,7 @@ static MQTTStatus_t readSubackStatus( size_t statusCount,
     
     behavior goodInput:
         assumes pSuback->remainingLength >= 3U;
-        ensures *pPacketIdentifier == UINT16_DECODE_(pSuback->pRemainingData);
+        ensures *pPacketIdentifier == UINT16_DECODE(pSuback->pRemainingData);
     
     complete behaviors;
     disjoint behaviors;
@@ -591,6 +593,7 @@ static MQTTStatus_t deserializeSuback( const MQTTPacketInfo_t * const pSuback,
     requires \valid(pSessionPresent);
     requires is_size_t(pConnack->remainingLength);
     requires valid_uint8_array(pConnack->pRemainingData, pConnack->remainingLength);
+    requires \separated(pConnack, pSessionPresent);
   
     assigns *pSessionPresent;
 
