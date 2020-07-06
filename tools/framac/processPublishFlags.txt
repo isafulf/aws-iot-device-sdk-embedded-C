@@ -1,0 +1,288 @@
+[kernel] Parsing processPublishFlags.c (with preprocessing)
+[kernel:typing:implicit-function-declaration] processPublishFlags.c:8: Warning: 
+  Calling undeclared function assert. Old style K&R code?
+[rte] annotating function processPublishFlags
+[wp] Running WP plugin...
+[kernel:annot:missing-spec] processPublishFlags.c:3: Warning: 
+  Neither code nor specification for function assert, generating default assigns from the prototype
+[wp] 12 goals scheduled
+[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access_3 : Valid (Qed:2ms) (31ms) (102)
+[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access_2 : Valid (Qed:2ms) (32ms) (103)
+[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access : Valid (Qed:2ms) (29ms) (103)
+[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_ensures : Valid (Qed:27ms) (34ms) (108)
+[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part2 : Valid (1ms)
+[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part1 : Valid
+[wp] [Qed] Goal typed_processPublishFlags_assigns_exit : Valid
+[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part5 : Valid (1ms)
+[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part4 : Valid (1ms)
+[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part3 : Valid (1ms)
+[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part6 : Valid (2ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access_4 : Valid (Qed:13ms) (30ms) (116)
+[wp] Proved goals:   12 / 12
+  Qed:               7  (1ms-5ms-27ms)
+  Alt-Ergo 2.3.2:    5  (29ms-34ms) (116)
+[report] Computing properties status...
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_DeserializePublish'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 78)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 79)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 70)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_DeserializeAck'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 161)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 162)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 163)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 150)
+            Unverifiable but considered Valid.
+[  Valid  ] Behavior 'badInput'
+            by Frama-C kernel.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_Init'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 154)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 155)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 156)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 157)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 158)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 159)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 163)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 164)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 165)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 166)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 167)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 168)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file mqtt.h, line 146)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nonNullInput'
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nullInput'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_GetPacketId'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'nullpContext' (file mqtt.h, line 313)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullpContext' (file mqtt.h, line 314)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullpContext' (file mqtt.h, line 318)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullpContext' (file mqtt.h, line 319)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullpContext' (file mqtt.h, line 320)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file mqtt.h, line 309)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nonNullpContext'
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nullpContext'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function '__assert'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'assert'
+--------------------------------------------------------------------------------
+
+[    -    ] Assigns nothing
+            tried with Inferred annotations.
+[    -    ] Froms (file processPublishFlags.c, line 8)
+            tried with Inferred annotations.
+[    -    ] Default behavior
+            tried with Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializePublish'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns (file deserializeFunctions.h, line 99)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'checkPublishRemainingLength'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 118)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 119)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 120)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 121)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'processPublishFlags'
+--------------------------------------------------------------------------------
+
+[  Valid  ] Post-condition (file deserializeFunctions.h, line 135)
+            by Wp.typed.
+[  Valid  ] Assigns (file deserializeFunctions.h, line 132)
+            by Wp.typed.
+[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 22)
+            by Wp.typed.
+[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 28)
+            by Wp.typed.
+[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 33)
+            by Wp.typed.
+[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 41)
+            by Wp.typed.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializePingresp'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 179)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 180)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializeSimpleAck'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 194)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 195)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 196)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 197)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 192)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializeSuback'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 215)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 216)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 220)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 211)
+            Unverifiable but considered Valid.
+[  Valid  ] Behavior 'badInput'
+            by Frama-C kernel.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'goodInput'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializeConnack'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 239)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 240)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 244)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 245)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 249)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 250)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 251)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 252)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 253)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 235)
+            Unverifiable but considered Valid.
+[  Valid  ] Behavior 'badInputA'
+            by Frama-C kernel.
+[  Valid  ] Behavior 'badInputB'
+            by Frama-C kernel.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'other'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'readSubackStatus'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'logConnackResponse'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Status Report Summary
+--------------------------------------------------------------------------------
+    30 Completely validated
+    57 Considered valid
+     3 To be validated
+    90 Total
+--------------------------------------------------------------------------------

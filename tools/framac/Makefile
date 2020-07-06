@@ -57,6 +57,22 @@ deserializeFunctions:
 deserializePublish:
 	frama-c -wp -rte $(FRAMAC) deserializePublish.c -then -report
 
+deserializePublishScript:
+	frama-c -wp -rte $(FRAMAC) MQTT_deserializePublish.c -then -report 
+	frama-c -wp -rte $(FRAMAC) deserializePublish.c -then -report 
+	frama-c -wp -rte $(FRAMAC) checkPublishRemainingLength.c -then -report 
+	frama-c -wp -rte $(FRAMAC) processPublishFlags.c -then -report 
+
+deserializePublishScriptParsed:
+	frama-c -wp -rte $(FRAMAC) MQTT_deserializePublish.c -then -report > MQTT_DeserializePublish.txt
+	python3 cleanFramacOutput.py MQTT_DeserializePublish /home/ubuntu/mqtt/tools/framac/MQTT_DeserializePublish.txt
+	frama-c -wp -rte $(FRAMAC) deserializePublish.c -then -report > deserializePublish.txt
+	python3 cleanFramacOutput.py deserializePublish /home/ubuntu/mqtt/tools/framac/deserializePublish.txt
+	frama-c -wp -rte $(FRAMAC) checkPublishRemainingLength.c -then -report > checkPublishRemainingLength.txt
+	python3 cleanFramacOutput.py checkPublishRemainingLength /home/ubuntu/mqtt/tools/framac/checkPublishRemainingLength.txt
+	frama-c -wp -rte $(FRAMAC) processPublishFlags.c -then -report > processPublishFlags.txt
+	python3 cleanFramacOutput.py processPublishFlags /home/ubuntu/mqtt/tools/framac/processPublishFlags.txt
+
 fc: 
 	frama-c -wp -rte $(FRAMAC) mqtt_fc.h -then -report
 

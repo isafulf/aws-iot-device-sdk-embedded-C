@@ -1,0 +1,258 @@
+[kernel] Parsing checkPublishRemainingLength.c (with preprocessing)
+[rte] annotating function checkPublishRemainingLength
+[wp] Running WP plugin...
+[wp] 6 goals scheduled
+[wp] [Qed] Goal typed_checkPublishRemainingLength_ensures_2 : Valid (3ms)
+[wp] [Qed] Goal typed_checkPublishRemainingLength_ensures : Valid (4ms)
+[wp] [Qed] Goal typed_checkPublishRemainingLength_assigns_part2 : Valid (1ms)
+[wp] [Qed] Goal typed_checkPublishRemainingLength_assigns_part1 : Valid (1ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_checkPublishRemainingLength_ensures_4 : Valid (Qed:10ms) (11ms) (30)
+[wp] [Alt-Ergo 2.3.2] Goal typed_checkPublishRemainingLength_ensures_3 : Valid (Qed:10ms) (11ms) (28)
+[wp] Proved goals:    6 / 6
+  Qed:               4  (1ms-5ms-10ms)
+  Alt-Ergo 2.3.2:    2  (11ms) (30)
+[report] Computing properties status...
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_DeserializePublish'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 78)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 79)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 70)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_DeserializeAck'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 161)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 162)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 163)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 150)
+            Unverifiable but considered Valid.
+[  Valid  ] Behavior 'badInput'
+            by Frama-C kernel.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_Init'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 154)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 155)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 156)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 157)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 158)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullInput' (file mqtt.h, line 159)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 163)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 164)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 165)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 166)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 167)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullInput' (file mqtt.h, line 168)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file mqtt.h, line 146)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nonNullInput'
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nullInput'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'MQTT_GetPacketId'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'nullpContext' (file mqtt.h, line 313)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nullpContext' (file mqtt.h, line 314)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullpContext' (file mqtt.h, line 318)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullpContext' (file mqtt.h, line 319)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'nonNullpContext' (file mqtt.h, line 320)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file mqtt.h, line 309)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nonNullpContext'
+            by Frama-C kernel.
+[  Valid  ] Behavior 'nullpContext'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function '__assert'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializePublish'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns (file deserializeFunctions.h, line 99)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'checkPublishRemainingLength'
+--------------------------------------------------------------------------------
+
+[  Valid  ] Post-condition (file deserializeFunctions.h, line 118)
+            by Wp.typed.
+[  Valid  ] Post-condition (file deserializeFunctions.h, line 119)
+            by Wp.typed.
+[  Valid  ] Post-condition (file deserializeFunctions.h, line 120)
+            by Wp.typed.
+[  Valid  ] Post-condition (file deserializeFunctions.h, line 121)
+            by Wp.typed.
+[  Valid  ] Assigns nothing
+            by Wp.typed.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'processPublishFlags'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 135)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 132)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializePingresp'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 179)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 180)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializeSimpleAck'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 194)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 195)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 196)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 197)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 192)
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializeSuback'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 215)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 216)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 220)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 211)
+            Unverifiable but considered Valid.
+[  Valid  ] Behavior 'badInput'
+            by Frama-C kernel.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'goodInput'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'deserializeConnack'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 239)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 240)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 244)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 245)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 249)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 250)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 251)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 252)
+            Unverifiable but considered Valid.
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 253)
+            Unverifiable but considered Valid.
+[ Extern  ] Assigns (file deserializeFunctions.h, line 235)
+            Unverifiable but considered Valid.
+[  Valid  ] Behavior 'badInputA'
+            by Frama-C kernel.
+[  Valid  ] Behavior 'badInputB'
+            by Frama-C kernel.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+[  Valid  ] Behavior 'other'
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'readSubackStatus'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Properties of Function 'logConnackResponse'
+--------------------------------------------------------------------------------
+
+[ Extern  ] Assigns nothing
+            Unverifiable but considered Valid.
+[  Valid  ] Default behavior
+            by Frama-C kernel.
+
+--------------------------------------------------------------------------------
+--- Status Report Summary
+--------------------------------------------------------------------------------
+    29 Completely validated
+    54 Considered valid
+    83 Total
+--------------------------------------------------------------------------------
