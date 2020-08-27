@@ -50,9 +50,6 @@ mqtt_GetPacketId:
 
 mqtt_Connect:
 	frama-c -wp -rte $(FRAMAC) MQTT_Connect.c -then -report
-
-deserializeFunctions:
-	frama-c -wp -rte $(FRAMAC) -wp-timeout 40 deserializeFunctions.c -then -report
 	
 deserializePublish:
 	frama-c -wp -rte $(FRAMAC) deserializePublish.c -then -report
@@ -73,8 +70,36 @@ deserializePublishScriptParsed:
 	frama-c -wp -rte $(FRAMAC) processPublishFlags.c -then -report > processPublishFlags.txt
 	python3 cleanFramacOutput.py processPublishFlags /home/ubuntu/mqtt/tools/framac/processPublishFlags.txt
 
+readSubackStatus:
+	frama-c -wp -rte $(FRAMAC) readSubackStatus.c -wp-timeout 40 -then -report 
+
+deserializeSuback:
+	frama-c -wp -rte $(FRAMAC) deserializeSuback.c -then -report  
+
+MQTT_deserializeAck:
+	frama-c -wp -rte $(FRAMAC) MQTT_DeserializeAck.c -then -report 
+
+deserializeAckScript:
+	frama-c -wp -rte $(FRAMAC) MQTT_DeserializeAck.c -then -report 
+	frama-c -wp -rte $(FRAMAC) deserializeSuback.c -then -report 
+	frama-c -wp -rte $(FRAMAC) readSubackStatus.c -then -report 
+
+deserializeAckScriptParsed:
+	frama-c -wp -rte $(FRAMAC) MQTT_DeserializeAck.c -then -report  > MQTT_DeserializeAck.txt
+	python3 cleanFramacOutput.py MQTT_DeserializeAck /home/ubuntu/mqtt/tools/framac/MQTT_DeserializeAck.txt
+	frama-c -wp -rte $(FRAMAC) deserializeSuback.c -then -report  > deserializeSuback.txt
+	python3 cleanFramacOutput.py deserializeSuback /home/ubuntu/mqtt/tools/framac/deserializeSuback.txt
+	frama-c -wp -rte $(FRAMAC) readSubackStatus.c -then -report  > readSubackStatus.txt
+	python3 cleanFramacOutput.py readSubackStatus /home/ubuntu/mqtt/tools/framac/readSubackStatus.txt
+
 fc: 
 	frama-c -wp -rte $(FRAMAC) mqtt_fc.h -then -report
 
 callgraph:
 	frama-c -users -main MQTT_Connect $(FRAMAC) ~/mqtt/libraries/standard/mqtt/src/mqtt.c
+
+otherFunctions:
+	frama-c -wp -rte $(FRAMAC) otherFunctions.c -then -report
+
+deserializeFunctions:
+	frama-c -wp -rte $(FRAMAC) deserializeFunctions.c -then -report

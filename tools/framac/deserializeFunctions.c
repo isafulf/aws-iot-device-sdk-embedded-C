@@ -82,7 +82,7 @@ static MQTTStatus_t deserializePublish( const MQTTPacketInfo_t * const pIncoming
 
         if( pPublishInfo->qos > MQTTQoS0 )
         {
-           // *pPacketId = UINT16_DECODE( pPacketIdentifierHigh );
+            //*pPacketId = UINT16_DECODE( pPacketIdentifierHigh );
 
             LogDebug( ( "Packet identifier %hu.", *pPacketId ) );
 

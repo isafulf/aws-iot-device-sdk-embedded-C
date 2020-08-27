@@ -5,7 +5,7 @@
   Cast with incompatible pointers types (source: sint8*) (target: uint8*)
 [wp] 19 goals scheduled
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_assigns_exit : Valid (8ms)
-[wp] [Qed] Goal typed_MQTT_DeserializePublish_ensures_2 : Valid (13ms)
+[wp] [Qed] Goal typed_MQTT_DeserializePublish_ensures_2 : Valid (14ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_ensures : Valid (39ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_assigns_normal_part3 : Valid (7ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_assigns_normal_part2 : Valid (4ms)
@@ -13,16 +13,16 @@
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_2 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_assigns_normal_part4 : Valid (5ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_MQTT_DeserializePublish_assert_rte_mem_access : Valid (Qed:7ms) (58ms) (254)
+[wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_6 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_5 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_4 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_3 : Valid (4ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_MQTT_DeserializePublish_assert_rte_mem_access : Valid (Qed:8ms) (58ms) (254)
+[wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_10 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_9 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_8 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_7 : Valid (4ms)
-[wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_6 : Valid (4ms)
 [wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_11 : Valid (4ms)
-[wp] [Qed] Goal typed_MQTT_DeserializePublish_call_deserializePublish_requires_10 : Valid (4ms)
 [wp] Proved goals:   19 / 19
   Qed:              18  (4ms-7ms-39ms)
   Alt-Ergo 2.3.2:    1  (58ms) (254)
@@ -225,9 +225,9 @@
 --- Properties of Function 'deserializePingresp'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 179)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 186)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 180)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 187)
             Unverifiable but considered Valid.
 [ Extern  ] Assigns nothing
             Unverifiable but considered Valid.
@@ -238,15 +238,15 @@
 --- Properties of Function 'deserializeSimpleAck'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 194)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 201)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 195)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 202)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 196)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 203)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 197)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 204)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 192)
+[ Extern  ] Assigns (file deserializeFunctions.h, line 199)
             Unverifiable but considered Valid.
 [  Valid  ] Default behavior
             by Frama-C kernel.
@@ -255,13 +255,13 @@
 --- Properties of Function 'deserializeSuback'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 215)
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 222)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 216)
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 223)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 220)
+[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 227)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 211)
+[ Extern  ] Assigns (file deserializeFunctions.h, line 218)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInput'
             by Frama-C kernel.
@@ -274,25 +274,25 @@
 --- Properties of Function 'deserializeConnack'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 239)
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 246)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 240)
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 247)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 244)
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 251)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 245)
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 252)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 249)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 256)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 250)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 257)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 251)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 258)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 252)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 259)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 253)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 260)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 235)
+[ Extern  ] Assigns (file deserializeFunctions.h, line 242)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInputA'
             by Frama-C kernel.

@@ -14,62 +14,62 @@
 [wp] deserializePublish.c:44: Warning: 
   Cast with incompatible pointers types (source: uint8*) (target: sint8*)
 [wp] 53 goals scheduled
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_4 : Valid (Qed:9ms) (65ms) (253)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_4 : Valid (Qed:8ms) (84ms) (253)
 [wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_3 : Valid (Qed:11ms) (76ms) (253)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_2 : Valid (Qed:7ms) (64ms) (226)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access : Valid (Qed:7ms) (57ms) (216)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_5 : Valid (Qed:21ms) (87ms) (276)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_shift : Valid (Qed:22ms) (44ms) (124)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_7 : Valid (Qed:20ms) (217ms) (568)
-[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_9 : Valid (7ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_2 : Valid (Qed:7ms) (60ms) (226)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access : Valid (Qed:7ms) (56ms) (216)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_5 : Valid (Qed:21ms) (79ms) (276)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_7 : Valid (Qed:20ms) (207ms) (568)
 [wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_8 : Valid (7ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_6 : Valid (Qed:20ms) (219ms) (567)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_signed_overflow : Valid (Qed:20ms) (43ms) (124)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_shift : Valid (Qed:22ms) (45ms) (124)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_6 : Valid (Qed:20ms) (222ms) (567)
+[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_9 : Valid (7ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_signed_overflow : Valid (Qed:20ms) (42ms) (124)
 [wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_13 : Valid (12ms)
 [wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_14 : Valid (11ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_12 : Valid (Qed:33ms) (54ms) (151)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_11 : Valid (Qed:32ms) (94ms) (324)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_10 : Valid (Qed:21ms) (48ms) (138)
-[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_18 : Valid (20ms)
-[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_16 : Valid (13ms)
-[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_19 : Valid (11ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_11 : Valid (Qed:33ms) (94ms) (324)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_10 : Valid (Qed:21ms) (51ms) (138)
+[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_16 : Valid (14ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_12 : Valid (Qed:42ms) (52ms) (151)
+[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_19 : Valid (13ms)
+[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_18 : Valid (21ms)
 [wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_17 : Valid (Qed:50ms) (93ms) (335)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_15 : Valid (Qed:40ms) (53ms) (155)
-[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_23 : Valid (12ms)
-[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_22 : Valid (21ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_20 : Valid (Qed:45ms) (90ms) (348)
-[wp] [Qed] Goal typed_deserializePublish_assigns_exit_part2 : Valid (6ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_15 : Valid (Qed:42ms) (56ms) (155)
+[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_23 : Valid (15ms)
+[wp] [Qed] Goal typed_deserializePublish_assert_rte_mem_access_22 : Valid (25ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_exit_part1 : Valid
+[wp] [Qed] Goal typed_deserializePublish_assigns_exit_part2 : Valid (7ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_21 : Valid (Qed:77ms) (124ms) (433)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_20 : Valid (Qed:48ms) (104ms) (348)
+[wp] [Qed] Goal typed_deserializePublish_assigns_exit_part5 : Valid (7ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_exit_part4 : Valid (6ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_exit_part3 : Valid (5ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_21 : Valid (Qed:76ms) (124ms) (433)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part03 : Valid (4ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_normal_part02 : Valid (5ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_normal_part01 : Valid
-[wp] [Qed] Goal typed_deserializePublish_assigns_exit_part5 : Valid (7ms)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part06 : Valid (9ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_normal_part05 : Valid (7ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_normal_part04 : Valid (6ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part03 : Valid (4ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part08 : Valid (11ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part07 : Valid (10ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part06 : Valid (9ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_24 : Valid (Qed:86ms) (126ms) (451)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part12 : Valid (12ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part11 : Valid (13ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part10 : Valid (12ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_assert_rte_mem_access_24 : Valid (Qed:91ms) (127ms) (451)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part10 : Valid (13ms)
 [wp] [Qed] Goal typed_deserializePublish_assigns_normal_part09 : Valid (11ms)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part08 : Valid (10ms)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part07 : Valid (11ms)
+[wp] [Qed] Goal typed_deserializePublish_call_processPublishFlags_requires : Valid (5ms)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part13 : Valid (14ms)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part12 : Valid (13ms)
+[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part11 : Valid (13ms)
+[wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_requires : Valid (5ms)
 [wp] [Qed] Goal typed_deserializePublish_call_processPublishFlags_requires_3 : Valid (4ms)
 [wp] [Qed] Goal typed_deserializePublish_call_processPublishFlags_requires_2 : Valid (4ms)
-[wp] [Qed] Goal typed_deserializePublish_call_processPublishFlags_requires : Valid (4ms)
-[wp] [Qed] Goal typed_deserializePublish_assigns_normal_part13 : Valid (13ms)
-[wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_2_requires : Valid (8ms)
-[wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_requires_3 : Valid
-[wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_requires : Valid (5ms)
 [wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_2_requires_2 : Valid (7ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_call_checkPublishRemainingLength_requires_2 : Valid (Qed:13ms) (46ms) (120)
-[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_call_checkPublishRemainingLength_2_requires_3 : Valid (Qed:22ms) (64ms) (142)
+[wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_2_requires : Valid (7ms)
+[wp] [Qed] Goal typed_deserializePublish_call_checkPublishRemainingLength_requires_3 : Valid
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_call_checkPublishRemainingLength_requires_2 : Valid (Qed:13ms) (43ms) (120)
+[wp] [Alt-Ergo 2.3.2] Goal typed_deserializePublish_call_checkPublishRemainingLength_2_requires_3 : Valid (Qed:22ms) (54ms) (142)
 [wp] Proved goals:   53 / 53
-  Qed:              34  (4ms-17ms-86ms)
-  Alt-Ergo 2.3.2:   19  (43ms-88ms-219ms) (568)
+  Qed:              34  (4ms-17ms-91ms)
+  Alt-Ergo 2.3.2:   19  (42ms-88ms-222ms) (568)
 [report] Computing properties status...
 
 --------------------------------------------------------------------------------
@@ -314,9 +314,9 @@
 --- Properties of Function 'deserializePingresp'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 179)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 186)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 180)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 187)
             Unverifiable but considered Valid.
 [ Extern  ] Assigns nothing
             Unverifiable but considered Valid.
@@ -327,15 +327,15 @@
 --- Properties of Function 'deserializeSimpleAck'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 194)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 201)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 195)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 202)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 196)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 203)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 197)
+[ Extern  ] Post-condition (file deserializeFunctions.h, line 204)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 192)
+[ Extern  ] Assigns (file deserializeFunctions.h, line 199)
             Unverifiable but considered Valid.
 [  Valid  ] Default behavior
             by Frama-C kernel.
@@ -344,13 +344,13 @@
 --- Properties of Function 'deserializeSuback'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 215)
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 222)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 216)
+[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 223)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 220)
+[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 227)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 211)
+[ Extern  ] Assigns (file deserializeFunctions.h, line 218)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInput'
             by Frama-C kernel.
@@ -363,25 +363,25 @@
 --- Properties of Function 'deserializeConnack'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 239)
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 246)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 240)
+[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 247)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 244)
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 251)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 245)
+[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 252)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 249)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 256)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 250)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 257)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 251)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 258)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 252)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 259)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 253)
+[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 260)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 235)
+[ Extern  ] Assigns (file deserializeFunctions.h, line 242)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInputA'
             by Frama-C kernel.

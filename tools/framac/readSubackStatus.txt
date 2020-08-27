@@ -1,52 +1,46 @@
-[kernel] Parsing processPublishFlags.c (with preprocessing)
-[kernel:typing:implicit-function-declaration] processPublishFlags.c:8: Warning: 
+[kernel] Parsing readSubackStatus.c (with preprocessing)
+[kernel:typing:implicit-function-declaration] readSubackStatus.c:9: Warning: 
   Calling undeclared function assert. Old style K&R code?
-[rte] annotating function processPublishFlags
+[rte] annotating function readSubackStatus
 [wp] Running WP plugin...
-[kernel:annot:missing-spec] processPublishFlags.c:3: Warning: 
+[kernel:annot:missing-spec] readSubackStatus.c:3: Warning: 
   Neither code nor specification for function assert, generating default assigns from the prototype
-[wp] 12 goals scheduled
-[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access_3 : Valid (Qed:2ms) (28ms) (102)
-[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access_2 : Valid (Qed:3ms) (28ms) (103)
-[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access : Valid (Qed:2ms) (30ms) (103)
-[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_ensures : Valid (Qed:29ms) (33ms) (108)
-[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part2 : Valid (1ms)
-[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part1 : Valid
-[wp] [Qed] Goal typed_processPublishFlags_assigns_exit : Valid
-[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part5 : Valid (2ms)
-[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part4 : Valid (1ms)
-[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part3 : Valid (2ms)
-[wp] [Qed] Goal typed_processPublishFlags_assigns_normal_part6 : Valid (2ms)
-[wp] [Alt-Ergo 2.3.2] Goal typed_processPublishFlags_assert_rte_mem_access_4 : Valid (Qed:14ms) (27ms) (116)
-[wp] Proved goals:   12 / 12
-  Qed:               7  (1ms-6ms-29ms)
-  Alt-Ergo 2.3.2:    5  (27ms-33ms) (116)
+[wp] 19 goals scheduled
+[wp] [Qed] Goal typed_readSubackStatus_loop_invariant_preserved_part1 : Valid (3ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_readSubackStatus_loop_invariant_established : Valid (Qed:2ms) (12ms) (24)
+[wp] [Alt-Ergo 2.3.2] Goal typed_readSubackStatus_loop_invariant_preserved_part3 : Valid (Qed:6ms) (18ms) (86)
+[wp] [Alt-Ergo 2.3.2] Goal typed_readSubackStatus_loop_invariant_preserved_part2 : Valid (Qed:5ms) (18ms) (71)
+[wp] [Qed] Goal typed_readSubackStatus_assigns_normal_part1 : Valid
+[wp] [Qed] Goal typed_readSubackStatus_assigns_exit : Valid
+[wp] [Qed] Goal typed_readSubackStatus_loop_assigns : Valid
+[wp] [Alt-Ergo 2.3.2] Goal typed_readSubackStatus_assert_rte_mem_access : Valid (Qed:4ms) (23ms) (89)
+[wp] [Qed] Goal typed_readSubackStatus_assigns_normal_part5 : Valid (2ms)
+[wp] [Qed] Goal typed_readSubackStatus_assigns_normal_part4 : Valid (2ms)
+[wp] [Qed] Goal typed_readSubackStatus_assigns_normal_part3 : Valid (1ms)
+[wp] [Qed] Goal typed_readSubackStatus_assigns_normal_part2 : Valid (1ms)
+[wp] [Qed] Goal typed_readSubackStatus_loop_variant_decrease_part1 : Valid (2ms)
+[wp] [Qed] Goal typed_readSubackStatus_assigns_normal_part6 : Valid (2ms)
+[wp] [Qed] Goal typed_readSubackStatus_loop_variant_positive_part2 : Valid (3ms)
+[wp] [Qed] Goal typed_readSubackStatus_loop_variant_positive_part1 : Valid (2ms)
+[wp] [Qed] Goal typed_readSubackStatus_loop_variant_positive_part3 : Valid (3ms)
+[wp] [Alt-Ergo 2.3.2] Goal typed_readSubackStatus_loop_variant_decrease_part3 : Valid (Qed:6ms) (19ms) (86)
+[wp] [Alt-Ergo 2.3.2] Goal typed_readSubackStatus_loop_variant_decrease_part2 : Valid (Qed:5ms) (18ms) (71)
+[wp] Proved goals:   19 / 19
+  Qed:              13  (1ms-3ms-6ms)
+  Alt-Ergo 2.3.2:    6  (12ms-23ms) (89)
 [report] Computing properties status...
-
---------------------------------------------------------------------------------
---- Properties of Function 'MQTT_DeserializePublish'
---------------------------------------------------------------------------------
-
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 78)
-            Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 79)
-            Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 70)
-            Unverifiable but considered Valid.
-[  Valid  ] Default behavior
-            by Frama-C kernel.
 
 --------------------------------------------------------------------------------
 --- Properties of Function 'MQTT_DeserializeAck'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 161)
+[ Extern  ] Post-condition for 'badInput' (file demo.h, line 70)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 162)
+[ Extern  ] Post-condition for 'badInput' (file demo.h, line 71)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 163)
+[ Extern  ] Post-condition for 'badInput' (file demo.h, line 72)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 150)
+[ Extern  ] Assigns (file demo.h, line 59)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInput'
             by Frama-C kernel.
@@ -128,63 +122,18 @@
 
 [    -    ] Assigns nothing
             tried with Inferred annotations.
-[    -    ] Froms (file processPublishFlags.c, line 8)
+[    -    ] Froms (file readSubackStatus.c, line 9)
             tried with Inferred annotations.
 [    -    ] Default behavior
             tried with Frama-C kernel.
 
 --------------------------------------------------------------------------------
---- Properties of Function 'deserializePublish'
---------------------------------------------------------------------------------
-
-[ Extern  ] Assigns (file deserializeFunctions.h, line 99)
-            Unverifiable but considered Valid.
-[  Valid  ] Default behavior
-            by Frama-C kernel.
-
---------------------------------------------------------------------------------
---- Properties of Function 'checkPublishRemainingLength'
---------------------------------------------------------------------------------
-
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 118)
-            Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 119)
-            Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 120)
-            Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 121)
-            Unverifiable but considered Valid.
-[ Extern  ] Assigns nothing
-            Unverifiable but considered Valid.
-[  Valid  ] Default behavior
-            by Frama-C kernel.
-
---------------------------------------------------------------------------------
---- Properties of Function 'processPublishFlags'
---------------------------------------------------------------------------------
-
-[  Valid  ] Post-condition (file deserializeFunctions.h, line 135)
-            by Wp.typed.
-[  Valid  ] Assigns (file deserializeFunctions.h, line 132)
-            by Wp.typed.
-[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 22)
-            by Wp.typed.
-[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 28)
-            by Wp.typed.
-[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 33)
-            by Wp.typed.
-[  Valid  ] Assertion 'rte,mem_access' (file processPublishFlags.c, line 41)
-            by Wp.typed.
-[  Valid  ] Default behavior
-            by Frama-C kernel.
-
---------------------------------------------------------------------------------
 --- Properties of Function 'deserializePingresp'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 186)
+[ Extern  ] Post-condition (file demo.h, line 89)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 187)
+[ Extern  ] Post-condition (file demo.h, line 90)
             Unverifiable but considered Valid.
 [ Extern  ] Assigns nothing
             Unverifiable but considered Valid.
@@ -195,15 +144,15 @@
 --- Properties of Function 'deserializeSimpleAck'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 201)
+[ Extern  ] Post-condition (file demo.h, line 104)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 202)
+[ Extern  ] Post-condition (file demo.h, line 105)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 203)
+[ Extern  ] Post-condition (file demo.h, line 106)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition (file deserializeFunctions.h, line 204)
+[ Extern  ] Post-condition (file demo.h, line 107)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 199)
+[ Extern  ] Assigns (file demo.h, line 102)
             Unverifiable but considered Valid.
 [  Valid  ] Default behavior
             by Frama-C kernel.
@@ -212,13 +161,13 @@
 --- Properties of Function 'deserializeSuback'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 222)
+[ Extern  ] Post-condition for 'badInput' (file demo.h, line 125)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInput' (file deserializeFunctions.h, line 223)
+[ Extern  ] Post-condition for 'badInput' (file demo.h, line 126)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'goodInput' (file deserializeFunctions.h, line 227)
+[ Extern  ] Post-condition for 'goodInput' (file demo.h, line 130)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 218)
+[ Extern  ] Assigns (file demo.h, line 121)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInput'
             by Frama-C kernel.
@@ -231,25 +180,25 @@
 --- Properties of Function 'deserializeConnack'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 246)
+[ Extern  ] Post-condition for 'badInputA' (file demo.h, line 149)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputA' (file deserializeFunctions.h, line 247)
+[ Extern  ] Post-condition for 'badInputA' (file demo.h, line 150)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 251)
+[ Extern  ] Post-condition for 'badInputB' (file demo.h, line 154)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'badInputB' (file deserializeFunctions.h, line 252)
+[ Extern  ] Post-condition for 'badInputB' (file demo.h, line 155)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 256)
+[ Extern  ] Post-condition for 'other' (file demo.h, line 159)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 257)
+[ Extern  ] Post-condition for 'other' (file demo.h, line 160)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 258)
+[ Extern  ] Post-condition for 'other' (file demo.h, line 161)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 259)
+[ Extern  ] Post-condition for 'other' (file demo.h, line 162)
             Unverifiable but considered Valid.
-[ Extern  ] Post-condition for 'other' (file deserializeFunctions.h, line 260)
+[ Extern  ] Post-condition for 'other' (file demo.h, line 163)
             Unverifiable but considered Valid.
-[ Extern  ] Assigns (file deserializeFunctions.h, line 242)
+[ Extern  ] Assigns (file demo.h, line 145)
             Unverifiable but considered Valid.
 [  Valid  ] Behavior 'badInputA'
             by Frama-C kernel.
@@ -264,8 +213,16 @@
 --- Properties of Function 'readSubackStatus'
 --------------------------------------------------------------------------------
 
-[ Extern  ] Assigns nothing
-            Unverifiable but considered Valid.
+[  Valid  ] Loop assigns (file readSubackStatus.c, line 13)
+            by Wp.typed.
+[  Valid  ] Assigns nothing
+            by Wp.typed.
+[  Valid  ] Loop variant at loop (file readSubackStatus.c, line 16)
+            by Wp.typed.
+[  Valid  ] Invariant (file readSubackStatus.c, line 12)
+            by Wp.typed.
+[  Valid  ] Assertion 'rte,mem_access' (file readSubackStatus.c, line 18)
+            by Wp.typed.
 [  Valid  ] Default behavior
             by Frama-C kernel.
 
@@ -281,8 +238,8 @@
 --------------------------------------------------------------------------------
 --- Status Report Summary
 --------------------------------------------------------------------------------
-    30 Completely validated
-    57 Considered valid
+    25 Completely validated
+    47 Considered valid
      3 To be validated
-    90 Total
+    75 Total
 --------------------------------------------------------------------------------
